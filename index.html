@@ -1202,34 +1202,33 @@
 
         <div class="contact-layout">
           <!-- Contact Form -->
-          <form class="contact-form" action="#" method="post">
-            <!-- Note: action can be connected to backend later -->
-            <div class="contact-form-title">Send me a message</div>
-            <div class="contact-form-sub">
-              Share your project idea or questions. I’ll get back to you via email.
-            </div>
+         <form class="contact-form" id="contact-form">
+  <div class="contact-form-title">Send me a message</div>
+  <div class="contact-form-sub">
+    Share your project idea or questions. I’ll get back to you via email.
+  </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="name">Name</label>
-                <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="email">Email</label>
-                <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
-              </div>
-            </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label" for="name">Name</label>
+      <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="email">Email</label>
+      <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+    </div>
+  </div>
 
-            <div class="form-group">
-              <label class="form-label" for="message">Message</label>
-              <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about your project or query..." required></textarea>
-            </div>
+  <div class="form-group">
+    <label class="form-label" for="message">Message</label>
+    <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about your project or query..." required></textarea>
+  </div>
 
-            <button type="submit" class="form-submit">
-              <i class="fa-solid fa-paper-plane"></i>
-              Send Message
-            </button>
-          </form>
+  <button type="submit" class="form-submit">
+    <i class="fa-solid fa-paper-plane"></i>
+    Send Message
+  </button>
+</form>
 
           <!-- Static contact info -->
           <div class="contact-grid">
@@ -1328,5 +1327,40 @@
       window.addEventListener("load", setActiveLink);
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS with your PUBLIC KEY
+  (function () {
+    emailjs.init("5aZxeNtqG0f0GFXzP");
+  })();
+
+  // Handle form submit
+  const contactForm = document.getElementById("contact-form");
+  contactForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop normal form submit (prevents 404)
+
+    const params = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value,
+    };
+
+    emailjs
+      emailjs
+  .send("service_ju70bte", "template_contactus", params)
+      .then(
+        function () {
+          alert("Message sent successfully!");
+          contactForm.reset();
+        },
+        function (error) {
+          console.log(error);
+          alert("Failed to send message. Please try again.");
+        }
+      );
+  });
+</script>
+
 </body>
 </html>
+
